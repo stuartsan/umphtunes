@@ -1,0 +1,13 @@
+#player-container {
+  background: gray;
+  padding: 1em; }
+
+#current-tune {
+  background: #3f3f3f;
+  color: #49ad54;
+  padding: 0.33em; }
+
+.btn {
+  display: inline-block; }
+  .btn:hover {
+    cursor: default; }

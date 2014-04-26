@@ -1,0 +1,23 @@
+$player-color: grey
+$screen-bg-color: #3F3F3F
+$screen-color: #49AD54
+
+@mixin clearfix
+	&:after
+		content: ""
+		display: table
+		clear: both
+
+#player-container
+	background: $player-color
+	padding: 1em
+
+#current-tune
+	background: $screen-bg-color
+	color: $screen-color
+	padding: .33em
+
+.btn
+	display: inline-block
+	&:hover
+		cursor: default

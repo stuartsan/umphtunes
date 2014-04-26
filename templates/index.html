@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UMtunes - All Umphrey's McGee, All The Time!</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<h1>UMtunes</h1>
+<div id="player-container">
+	<div id="current-tune">
+		<span class="title"></span>
+	</div>
+	<div id="track-position">
+		<span>Track position</span>
+		<input type="range" min="0" max="100" value="0">
+	</div>	
+	<div id="prev" class="btn">Previous</div>
+	<div id="play-pause" class="btn paused">paused...</div>
+	<div id="next" class="btn">Next</div>
+	<div id="volume">
+		<span>Volume</span>
+		<input type="range" min="0" max="100" value="100">
+	</div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

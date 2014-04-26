@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, \
     Sequence, create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
+from collections import OrderedDict
 
 Base = declarative_base()
 
@@ -16,6 +17,12 @@ class Album(Base):
     lineage = Column(String)
     taped_by = Column(String)
     transferred_by = Column(String)
+    def to_dict(self):
+        d = {}
+        d['title'] = self.title
+        d['venue'] = self.venue
+        d['archive_org_id'] = self.archive_org_id
+        return d
 
 class Song(Base):
     __tablename__ = 'songs'
@@ -25,7 +32,12 @@ class Song(Base):
     filename = Column(String)
     size = Column(Integer)
     album_id = Column(String, ForeignKey('albums.archive_org_id'))
-    
+    def to_dict(self):
+        d = {}
+        d['title'] = self.title
+        d['filename'] = self.filename
+        d['album_id'] = self.album_id
+        return d
 
 class Image(Base):
     __tablename__ = 'images'
@@ -39,5 +51,5 @@ def add_tables(base, engine):
 
 def connect():
     engine = create_engine('postgresql://ss@localhost/umphtest')
-    Session = sessionmaker(bind=engine)
+    Session = scoped_session(sessionmaker(bind=engine))
     return engine, Session
