@@ -9453,8 +9453,9 @@ Playlist.prototype.addTunes =  function(tunes) {
 Playlist.prototype.setCurrent = function(index) {
 	index = index || 0;
 	var self = this;
-	
+	var vol = 100;
 	if (this.currentTune) {
+		vol = this.getVol();
 		this.currentTune.pause().reset().setVol(100);
 		this.currentTune.audio.onended = null;
 		this.currentTune.audio.ontimeupdate = null;
@@ -9462,6 +9463,7 @@ Playlist.prototype.setCurrent = function(index) {
 	
 	this.currentTune = this.tunes[index];
 	this.currentIndex = index;
+	this.setVol(vol);
 	this.currentTune.audio.onended = function() {
 		self.next();
 	};
@@ -9527,6 +9529,10 @@ Playlist.prototype.setVol = function(n) {
 	if (n > 100) n = 100;
 	if (n < 0) n = 0;
 	this.currentTune.setVol(n);
+};
+
+Playlist.prototype.getVol = function() {
+	return this.currentTune.audio.volume * 100;
 };
 },{"./constants":6,"events":1}],4:[function(require,module,exports){
 var Playlist = require('./Playlist.js');
@@ -9603,24 +9609,6 @@ function Tune(opts) {
 	this.audio = new Audio();
 	this.audio.src = opts.url;
 	this.audio.preload = opts.preload ? 'auto' : 'none';
-
-	this.audio.onload = function() {
-		console.log('loaded');
-	};
-	this.audio.onloadstart = function() {
-		console.log('load start');
-	};
-	this.audio.onloadeddata = function() {
-		console.log('loaded data');
-	};
-	this.audio.oncanplaythrough = function() {
-		console.log('can play through! in theory!');
-	};
-	// this.audio.ontimeupdate = function() {
-	// 	if ( self.audio.buffered.end && self.audio.buffered.end(0) - self.audio.currentTime < 5) {
-	// 	  	console.log('whooooah we are running out of buffered song...')
-	// 	}
-	// }
 }
 
 Tune.prototype = {
@@ -9678,11 +9666,11 @@ exports.formatTime = function(seconds) {
 var RandomPlaylist = require('./RandomPlaylist.js'),
 	$ = require('jquery'),
 	fmtTime = require('./helpers').formatTime,
-	player = window.p = new RandomPlaylist();
+	player = new RandomPlaylist();
 
 
 /**
- * All DOM manipulation/interaction encapsulated below. This is like the "view".
+ * All DOM manipulation/interaction encapsulated below. This is like the "viewtroller".
  */
 
 var $playPause = $('#play-pause'),
@@ -9720,6 +9708,7 @@ player.on('tuneLoad', function(tune, tuneIdx) {
 	$currentTune.find('.title .val').text(tune.title);
 	$currentTune.find('.show .val').text(tune.album_title);
 	$trackCurTime.text(fmtTime(0));
+	$vol.val(player.getVol());
 });
 
 player.on('play', function() {
@@ -9731,7 +9720,6 @@ player.on('pause', function() {
 });
 
 player.on('timeUpdate', function(tune) {
-	//Set track position max...
 	$trackCurTime.text(fmtTime(tune.audio.currentTime));
 	$trackPos.attr('max', Math.floor(tune.audio.duration));
 	$trackPos.val(tune.audio.currentTime);

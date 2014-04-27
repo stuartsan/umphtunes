@@ -1,11 +1,11 @@
 var RandomPlaylist = require('./RandomPlaylist.js'),
 	$ = require('jquery'),
 	fmtTime = require('./helpers').formatTime,
-	player new RandomPlaylist();
+	player = new RandomPlaylist();
 
 
 /**
- * All DOM manipulation/interaction encapsulated below. This is like the "view".
+ * All DOM manipulation/interaction encapsulated below. This is like the "viewtroller".
  */
 
 var $playPause = $('#play-pause'),
@@ -43,6 +43,7 @@ player.on('tuneLoad', function(tune, tuneIdx) {
 	$currentTune.find('.title .val').text(tune.title);
 	$currentTune.find('.show .val').text(tune.album_title);
 	$trackCurTime.text(fmtTime(0));
+	$vol.val(player.getVol());
 });
 
 player.on('play', function() {
@@ -54,7 +55,6 @@ player.on('pause', function() {
 });
 
 player.on('timeUpdate', function(tune) {
-	//Set track position max...
 	$trackCurTime.text(fmtTime(tune.audio.currentTime));
 	$trackPos.attr('max', Math.floor(tune.audio.duration));
 	$trackPos.val(tune.audio.currentTime);

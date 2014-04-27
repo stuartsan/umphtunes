@@ -37,8 +37,9 @@ Playlist.prototype.addTunes =  function(tunes) {
 Playlist.prototype.setCurrent = function(index) {
 	index = index || 0;
 	var self = this;
-	
+	var vol = 100;
 	if (this.currentTune) {
+		vol = this.getVol();
 		this.currentTune.pause().reset().setVol(100);
 		this.currentTune.audio.onended = null;
 		this.currentTune.audio.ontimeupdate = null;
@@ -46,6 +47,7 @@ Playlist.prototype.setCurrent = function(index) {
 	
 	this.currentTune = this.tunes[index];
 	this.currentIndex = index;
+	this.setVol(vol);
 	this.currentTune.audio.onended = function() {
 		self.next();
 	};
@@ -111,4 +113,8 @@ Playlist.prototype.setVol = function(n) {
 	if (n > 100) n = 100;
 	if (n < 0) n = 0;
 	this.currentTune.setVol(n);
+};
+
+Playlist.prototype.getVol = function() {
+	return this.currentTune.audio.volume * 100;
 };

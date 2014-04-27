@@ -11,24 +11,6 @@ function Tune(opts) {
 	this.audio = new Audio();
 	this.audio.src = opts.url;
 	this.audio.preload = opts.preload ? 'auto' : 'none';
-
-	this.audio.onload = function() {
-		console.log('loaded');
-	};
-	this.audio.onloadstart = function() {
-		console.log('load start');
-	};
-	this.audio.onloadeddata = function() {
-		console.log('loaded data');
-	};
-	this.audio.oncanplaythrough = function() {
-		console.log('can play through! in theory!');
-	};
-	// this.audio.ontimeupdate = function() {
-	// 	if ( self.audio.buffered.end && self.audio.buffered.end(0) - self.audio.currentTime < 5) {
-	// 	  	console.log('whooooah we are running out of buffered song...')
-	// 	}
-	// }
 }
 
 Tune.prototype = {
