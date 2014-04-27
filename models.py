@@ -1,3 +1,4 @@
+import os
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, \
     Sequence, create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
@@ -51,6 +52,7 @@ def add_tables(base, engine):
     base.metadata.create_all(engine)
 
 def connect():
-    engine = create_engine('postgresql://ss@localhost/umphtest')
+    db_url = os.environ['DATABASE_URL']
+    engine = create_engine(db_url)
     Session = scoped_session(sessionmaker(bind=engine))
     return engine, Session
