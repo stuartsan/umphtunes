@@ -15,9 +15,12 @@ module.exports = function(grunt) {
 				expr: true
 			}
 		},
-		sass: {
+		compass: {
 			all: {
-				files: { 'static/css/style.css' : 'static/sass/style.sass' }
+				options: {
+					sassDir: 'static/sass',
+					cssDir: 'static/css'
+				}
 			}
 		},
 		watch: {
@@ -27,7 +30,7 @@ module.exports = function(grunt) {
 			},
 			sass: {
 				files: ['static/sass/**/*.sass'],
-				tasks: ['sass']
+				tasks: ['compass']
 			},
 			options: {
 			  spawn: false,
@@ -40,6 +43,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-contrib-compass');
 };
 

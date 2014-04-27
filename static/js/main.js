@@ -9561,7 +9561,8 @@ RandomPlaylist.prototype.loadTunes = function(callback) {
 				return new Tune({
 					url: [ARCHIVE_ORG_URL, tune.album_id, tune.filename].join('/'),
 					title: tune.title,
-					album: tune.album_id
+					album: tune.album_id,
+					album_title: tune.album_title.replace(/^umphrey'?s mcgee ?/i, '')
 				});
 			});
 			self.addTunes(randomTunes);
@@ -9595,7 +9596,9 @@ function Tune(opts) {
 	var self = this;
 
 	this.title = opts.title || 'Unknown Title';
-	this.album = opts.album || 'Unknown Album';
+	this.album = opts.album || 'Unknown Album ID';
+	this.album_title = opts.album_title || 'Unknown Album';
+	this.venue = opts.venue || 'Unknown Venue';
 
 	this.audio = new Audio();
 	this.audio.src = opts.url;
@@ -9663,16 +9666,32 @@ module.exports = {
 	ARCHIVE_ORG_URL: 'https://archive.org/download'
 };
 },{}],7:[function(require,module,exports){
-var RandomPlaylist = require('./RandomPlaylist.js');
-var $ = require('jquery');
+exports.formatTime = function(seconds) {
+	var date = new Date(0);
+	date.setSeconds(seconds);
+	var mins = date.getMinutes();
+	var secs = date.getSeconds();	
+	return [mins < 10 ? '0' + mins : mins, ':', 
+			secs < 10 ? '0' + secs : secs].join('');
+};
+},{}],8:[function(require,module,exports){
+var RandomPlaylist = require('./RandomPlaylist.js'),
+	$ = require('jquery'),
+	fmtTime = require('./helpers').formatTime,
+	player = window.p = new RandomPlaylist();
 
-var player = window.p = new RandomPlaylist(); //remove window!
+
+/**
+ * All DOM manipulation/interaction encapsulated below. This is like the "view".
+ */
 
 var $playPause = $('#play-pause'),
 	$next = $('#next'),
 	$prev = $('#prev'),
 	$vol = $('#volume input'),
 	$trackPos = $('#track-position input'),
+	$trackCurTime = $('#track-position .current'),
+	$trackEndTime = $('#track-position .end'),
 	$currentTune = $('#current-tune');
 
 /**
@@ -9694,26 +9713,28 @@ $trackPos.on('input', function(e) {
 });
 
 /**
- * Push successful changes in the model back to the UI
+ * Push successful model changes back to UI
  */
 player.on('tuneLoad', function(tune, tuneIdx) {
 	tuneIdx === 0 ? $prev.addClass('disabled') : $prev.removeClass('disabled');
-	$currentTune.find('.title').text(tune.title);
+	$currentTune.find('.title .val').text(tune.title);
+	$currentTune.find('.show .val').text(tune.album_title);
+	$trackCurTime.text(fmtTime(0));
 });
 
 player.on('play', function() {
 	$playPause.removeClass('paused').addClass('playing');
-	$playPause.text('playing...'); //remove
 });
 
 player.on('pause', function() {
 	$playPause.removeClass('playing').addClass('paused');
-	$playPause.text('paused...'); //remove
 });
 
 player.on('timeUpdate', function(tune) {
 	//Set track position max...
+	$trackCurTime.text(fmtTime(tune.audio.currentTime));
 	$trackPos.attr('max', Math.floor(tune.audio.duration));
 	$trackPos.val(tune.audio.currentTime);
+	$trackEndTime.text(fmtTime(Math.floor(tune.audio.duration)));
 });
-},{"./RandomPlaylist.js":4,"jquery":2}]},{},[7])
+},{"./RandomPlaylist.js":4,"./helpers":7,"jquery":2}]},{},[8])

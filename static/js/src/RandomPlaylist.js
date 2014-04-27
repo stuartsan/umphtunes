@@ -30,7 +30,8 @@ RandomPlaylist.prototype.loadTunes = function(callback) {
 				return new Tune({
 					url: [ARCHIVE_ORG_URL, tune.album_id, tune.filename].join('/'),
 					title: tune.title,
-					album: tune.album_id
+					album: tune.album_id,
+					album_title: tune.album_title.replace(/^umphrey'?s mcgee ?/i, '')
 				});
 			});
 			self.addTunes(randomTunes);

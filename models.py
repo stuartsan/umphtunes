@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, \
     Sequence, create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from collections import OrderedDict
 
@@ -32,6 +32,7 @@ class Song(Base):
     filename = Column(String)
     size = Column(Integer)
     album_id = Column(String, ForeignKey('albums.archive_org_id'))
+    album = relationship('Album', backref=backref('songs'))
     def to_dict(self):
         d = {}
         d['title'] = self.title

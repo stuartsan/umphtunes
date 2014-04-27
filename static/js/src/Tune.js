@@ -4,7 +4,9 @@ function Tune(opts) {
 	var self = this;
 
 	this.title = opts.title || 'Unknown Title';
-	this.album = opts.album || 'Unknown Album';
+	this.album = opts.album || 'Unknown Album ID';
+	this.album_title = opts.album_title || 'Unknown Album';
+	this.venue = opts.venue || 'Unknown Venue';
 
 	this.audio = new Audio();
 	this.audio.src = opts.url;

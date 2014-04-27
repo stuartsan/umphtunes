@@ -13,12 +13,26 @@ def get_random_tunes():
     engine, Session = connect()
     session = Session()
     # Get some random albums
-    albums = session.query(Song).order_by(func.random()).limit(10).all()
-    res = {"data": [album.to_dict() for album in albums]}
+    songs = session.query(Song).order_by(func.random()).limit(10).all()
+    res = {"data": [song.to_dict() for song in songs]}
+    res = {"data":[]}
+    for song in songs:
+        s = song.to_dict()
+        s['album_title'] = song.album.title
+        s['venue'] = song.album.venue
+        res['data'].append(s)
     
     return jsonify(res)
 
+def horse_around():
+    engine, Session = connect()
+    session = Session()
+    q = session.query(Song).join(Album).order_by(func.random()).limit(10).all()
+    print vars(q[0].album)
+
+
 if __name__ == '__main__':
+    # horse_around()
     app.run(debug=True, port=5000)
 
 #Search for song titles containing some string

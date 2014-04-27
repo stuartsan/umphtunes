@@ -1,26 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>UMtunes - All Umphrey's McGee, All The Time!</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>UMtunes - All Umphrey's McGee, All The Time!</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-<h1>UMtunes</h1>
-<div id="player-container">
-	<div id="current-tune">
-		<span class="title"></span>
-	</div>
-	<div id="track-position">
-		<span>Track position</span>
-		<input type="range" min="0" max="100" value="0">
-	</div>	
-	<div id="prev" class="btn">Previous</div>
-	<div id="play-pause" class="btn paused">paused...</div>
-	<div id="next" class="btn">Next</div>
-	<div id="volume">
-		<span>Volume</span>
-		<input type="range" min="0" max="100" value="100">
-	</div>
+<div id="page">
+  <header>
+    <h1 id="site-title">UMtunes</h1>
+    <h2 id="site-tagline">All Umphrey's McGee, <em>All The Time!</em></h2>
+  </header>
+  <div id="player-container">
+    <div id="current-tune">
+      <div class="unit title">
+        <span class="val"></span>
+      </div>
+      <div class="unit show">
+        <span class="val"></span>
+      </div>
+    </div>
+    <div id="mid-wrap">
+      <div id="track-position">
+        <span class="current"></span>
+        <input type="range" min="0" max="100" value="0">
+        <span class="end"></span>
+      </div>
+      <div id="controls">
+        <div id="prev" class="btn"></div>
+        <div id="play-pause" class="btn paused"></div>
+        <div id="next" class="btn"></div>
+      </div>
+      <div id="volume">
+        <div class="icon"></div>
+        <input type="range" min="0" max="100" value="100">
+      </div>
+    </div>
+  </div>
+  <div id="about">
+    <p>UMtunes is an interface to Umphrey's's huge collection of live music freely available on <a href="http://archive.org">archive.org.</a> Right now it's kind of like an Umphrey's-only-Pandora. Stay tuned, soon you'll be able to search through the entire catalog (over 2,000 shows!) and make playlists.</p>
+    <p><a href="https://github.com/stuartsan/umphtunes">Code on GitHub.</a> <a href="https://www.flickr.com/photos/60035031@N06/">Image credit.</a></p>
+    <p>Drop me a line at umtunes at gee, mail! dot com.</p>
+  </div>
 </div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>

@@ -1,23 +1,134 @@
-$player-color: grey
-$screen-bg-color: #3F3F3F
-$screen-color: #49AD54
+@import compass
 
-@mixin clearfix
-	&:after
-		content: ""
-		display: table
-		clear: both
+$grey: #3F3F3F
+$player-color: lighten($grey, 24%)
+$screen-bg-color: $grey
+$green: #49AD54
+$green-dark: #187023
+$blue: #3a8188
+$blue-dark: #135258
+$blue-grey: #3a6266
+
+$main-font: Arial, sans-serif
+
+html
+	background: url('../img/mock-bg.jpg') no-repeat center center fixed
+	@include background-size(cover)
+
+body
+	font: 15px/1.2em $main-font
+	color: $grey
+	margin: 0
+	padding: 0
+
+h1, h2, h3, h4, h5, h6
+	margin: 0
+	padding: 0
+
+a:link,
+a:visited
+	color: $blue-grey
+
+textarea:focus,
+input:focus
+	outline: none
+
+
+#page
+	min-width: 300px
+	max-width: 800px
+	margin: 2em auto 0 auto
+	text-align: center
+	background: $blue
+	border: solid 3px $blue-dark
+
+
+header
+	padding: .8em
+
+#site-title
+	color: $blue-dark
+	font-size: 1.6em
+	font-family: 'Book Antiqua'
+	display: inline-block
+
+#site-tagline
+	color: $blue-grey
+	font-size: .7em
+	display: inline-block
 
 #player-container
 	background: $player-color
-	padding: 1em
+	border-bottom: solid 3px lighten($grey, 20%)
 
 #current-tune
+	min-height: 2em
 	background: $screen-bg-color
-	color: $screen-color
-	padding: .33em
+	color: $green
+	padding: .5em
+	.title
+		font-size: 1.4em
+		margin-bottom: .2em
+	.show
+		font-size: .8em
+		color: $green-dark
 
-.btn
-	display: inline-block
-	&:hover
-		cursor: default
+#mid-wrap
+	@include clearfix
+	padding-top: 5px
+
+#controls, #track-position, #volume
+	float: left
+	width: 33%
+
+#controls
+	.btn
+		opacity: .90
+		display: inline-block
+		height: 18px
+		width: 38px
+		background: url('../img/controls.png') no-repeat
+		@include background-size(cover)
+		&:hover
+			cursor: default
+		&.disabled
+			opacity: .33
+	#prev
+		background-position: -4px 0
+
+	#next
+		background-position: -147px 0
+
+	#play-pause
+		background-position: -75px 0
+		&.playing
+			background-position: -183px 0
+
+#track-position
+	font-size: .8em
+
+input[type="range"]
+	-webkit-appearance: none
+	-moz-appearance: none
+	height: 10px
+	background: $screen-bg-color
+
+input[type="range"]::-webkit-slider-thumb
+	-webkit-appearance: none
+	height: 10px
+	width: 10px
+	background: $green
+
+input[type="range"]::-moz-range-thumb
+	-moz-appearance: none
+	height: 10px
+	width: 10px
+	background: $green
+
+
+#volume
+	.icon
+		display: inline-block
+		width: 16px
+		height: 10px
+		background: url('../img/volume.png') no-repeat

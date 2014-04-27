@@ -1,13 +1,175 @@
-#player-container {
-  background: gray;
-  padding: 1em; }
+/* line 14, ../sass/style.sass */
+html {
+  background: url("../img/mock-bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
+/* line 18, ../sass/style.sass */
+body {
+  font: 15px/1.2em Arial, sans-serif;
+  color: #3f3f3f;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 24, ../sass/style.sass */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 28, ../sass/style.sass */
+a:link,
+a:visited {
+  color: #3a6266;
+}
+
+/* line 32, ../sass/style.sass */
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+/* line 37, ../sass/style.sass */
+#page {
+  min-width: 300px;
+  max-width: 800px;
+  margin: 2em auto 0 auto;
+  text-align: center;
+  background: #3a8188;
+  border: solid 3px #135258;
+}
+
+/* line 46, ../sass/style.sass */
+header {
+  padding: 0.8em;
+}
+
+/* line 49, ../sass/style.sass */
+#site-title {
+  color: #135258;
+  font-size: 1.6em;
+  font-family: "Book Antiqua";
+  display: inline-block;
+}
+
+/* line 55, ../sass/style.sass */
+#site-tagline {
+  color: #3a6266;
+  font-size: 0.7em;
+  display: inline-block;
+}
+
+/* line 60, ../sass/style.sass */
+#player-container {
+  background: #7c7c7c;
+  border-bottom: solid 3px #727272;
+}
+
+/* line 64, ../sass/style.sass */
 #current-tune {
+  min-height: 2em;
   background: #3f3f3f;
   color: #49ad54;
-  padding: 0.33em; }
+  padding: 0.5em;
+}
+/* line 69, ../sass/style.sass */
+#current-tune .title {
+  font-size: 1.4em;
+  margin-bottom: 0.2em;
+}
+/* line 72, ../sass/style.sass */
+#current-tune .show {
+  font-size: 0.8em;
+  color: #187023;
+}
 
-.btn {
-  display: inline-block; }
-  .btn:hover {
-    cursor: default; }
+/* line 76, ../sass/style.sass */
+#mid-wrap {
+  overflow: hidden;
+  *zoom: 1;
+  padding-top: 5px;
+}
+
+/* line 80, ../sass/style.sass */
+#controls, #track-position, #volume {
+  float: left;
+  width: 33%;
+}
+
+/* line 85, ../sass/style.sass */
+#controls .btn {
+  opacity: 0.9;
+  display: inline-block;
+  height: 18px;
+  width: 38px;
+  background: url("../img/controls.png") no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+/* line 92, ../sass/style.sass */
+#controls .btn:hover {
+  cursor: default;
+}
+/* line 94, ../sass/style.sass */
+#controls .btn.disabled {
+  opacity: 0.33;
+}
+/* line 96, ../sass/style.sass */
+#controls #prev {
+  background-position: -4px 0;
+}
+/* line 99, ../sass/style.sass */
+#controls #next {
+  background-position: -147px 0;
+}
+/* line 102, ../sass/style.sass */
+#controls #play-pause {
+  background-position: -75px 0;
+}
+/* line 104, ../sass/style.sass */
+#controls #play-pause.playing {
+  background-position: -183px 0;
+}
+
+/* line 107, ../sass/style.sass */
+#track-position {
+  font-size: 0.8em;
+}
+
+/* line 110, ../sass/style.sass */
+input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 10px;
+  background: #3f3f3f;
+}
+
+/* line 116, ../sass/style.sass */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 10px;
+  width: 10px;
+  background: #49ad54;
+}
+
+/* line 122, ../sass/style.sass */
+input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  height: 10px;
+  width: 10px;
+  background: #49ad54;
+}
+
+/* line 130, ../sass/style.sass */
+#volume .icon {
+  display: inline-block;
+  width: 16px;
+  height: 10px;
+  background: url("../img/volume.png") no-repeat;
+}
