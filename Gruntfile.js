@@ -5,6 +5,9 @@ module.exports = function(grunt) {
 			all: {
 				src: 'static/js/src/main.js',
 				dest: 'static/js/main.js'
+			},
+			options: {
+				transform: [['uglifyify', {global: true}]]
 			}
 		},
 		jshint: {
@@ -44,5 +47,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-compass');
+	grunt.loadNpmTasks('uglifyify');
 };
-

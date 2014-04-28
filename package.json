@@ -31,6 +31,7 @@
     "grunt-browserify": "^2.0.8",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-compass": "^0.7.2"
+    "grunt-contrib-compass": "^0.7.2",
+    "uglifyify": "^2.1.1"
   }
 }
