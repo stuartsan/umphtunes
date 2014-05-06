@@ -1,4 +1,5 @@
 exports.formatTime = function(seconds) {
+	if (isNaN(parseInt(seconds,10))) seconds = 0;
 	var date = new Date(0);
 	date.setSeconds(seconds);
 	var mins = date.getMinutes();

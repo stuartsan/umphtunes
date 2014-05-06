@@ -12,6 +12,9 @@ function Playlist() {
 	this.currentIndex = 0;
 	this.isPlaying = false;
 	this.loop = false;
+	//Event handlers bound to playlist instance so things don't get whack
+	this._emitTime = function() { this.emit('timeUpdate', this.currentTune);}.bind(this);
+	this._gotoNext = function() { this.next(); }.bind(this);
 }
 
 Playlist.prototype = Object.create(events.EventEmitter.prototype, {
@@ -36,27 +39,33 @@ Playlist.prototype.addTunes =  function(tunes) {
  */
 Playlist.prototype.setCurrent = function(index) {
 	index = index || 0;
-	var self = this;
 	var vol = 100;
+
 	if (this.currentTune) {
 		vol = this.getVol();
 		this.currentTune.pause().reset().setVol(100);
-		this.currentTune.audio.onended = null;
-		this.currentTune.audio.ontimeupdate = null;
+		this.removeTuneListeners(this.currentTune);
 	}		
 	
 	this.currentTune = this.tunes[index];
 	this.currentIndex = index;
 	this.setVol(vol);
-	this.currentTune.audio.onended = function() {
-		self.next();
-	};
-	this.currentTune.audio.ontimeupdate = function() {
-		self.emit('timeUpdate', self.currentTune);
-	};
+	this.addTuneListeners(this.currentTune);
 	this.emit('tuneLoad', this.currentTune, this.currentIndex);
 	this.currentTune.download();
 	this.isPlaying && this.play();
+};
+
+Playlist.prototype.addTuneListeners = function (tune) {
+	tune.audio.addEventListener('ended', this._gotoNext);
+	tune.audio.addEventListener('timeupdate', this._emitTime);
+	tune.audio.addEventListener('durationchange', this._emitTime);
+};
+
+Playlist.prototype.removeTuneListeners = function (tune) {
+	tune.audio.removeEventListener('ended', this._gotoNext);
+	tune.audio.removeEventListener('timeupdate', this._emitTime);
+	tune.audio.removeEventListener('durationchange', this._emitTime);
 };
 
 /**
