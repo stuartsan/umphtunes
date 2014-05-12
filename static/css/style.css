@@ -173,3 +173,8 @@ input[type="range"]::-moz-range-thumb {
   height: 10px;
   background: url("../img/volume.png") no-repeat;
 }
+
+/* line 136, ../sass/style.sass */
+.credit {
+  font-size: 0.7em;
+}
